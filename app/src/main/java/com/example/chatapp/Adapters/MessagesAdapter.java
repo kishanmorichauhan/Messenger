@@ -1,6 +1,7 @@
 package com.example.chatapp.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -56,6 +57,7 @@ public class MessagesAdapter extends RecyclerView.Adapter {
 
     }
 
+
     @Override
     public int getItemViewType(int position) {
         Message message = messages.get(position);
@@ -69,7 +71,6 @@ public class MessagesAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull  RecyclerView.ViewHolder holder, int position) {
         Message message = messages.get(position);
-
 //        int[] reactions = new int[]{
 //                R.drawable.ic_fb_like,
 //                R.drawable.ic_fb_love,
@@ -178,7 +179,7 @@ public class MessagesAdapter extends RecyclerView.Adapter {
         return messages.size();
     }
 
-    public class SendViewHolder extends RecyclerView.ViewHolder{
+    public static class SendViewHolder extends RecyclerView.ViewHolder{
 
         ItemSendBinding binding;
         public SendViewHolder(@NonNull View itemView) {
@@ -186,7 +187,7 @@ public class MessagesAdapter extends RecyclerView.Adapter {
             binding = ItemSendBinding.bind(itemView);
         }
     }
-    public class ReceiverViewHolder extends RecyclerView.ViewHolder{
+    public static class ReceiverViewHolder extends RecyclerView.ViewHolder{
         ItemReceiveBinding binding;
 
         public ReceiverViewHolder(@NonNull View itemView) {

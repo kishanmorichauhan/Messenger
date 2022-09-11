@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray"
+    android:background="#FFE9F0"
     tools:context=".Activitys.ChatActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -78,7 +78,7 @@
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="8dp"
         app:cardCornerRadius="25dp"
-        app:cardBackgroundColor="#E3D9F8"
+        app:cardBackgroundColor="#F3B8CD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/sendBtn"
         app:layout_constraintStart_toStartOf="parent">
@@ -107,13 +107,15 @@
                 android:layout_width="18dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="12dp"
+                android:visibility="gone"
                 app:srcCompat="@drawable/attechment" />
 
             <ImageView
                 android:id="@+id/camera"
-                android:layout_width="18dp"
+                android:layout_width="@dimen/_30sdp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="12dp"
+                android:padding="@dimen/_6sdp"
                 app:srcCompat="@drawable/camera" />
 
         </LinearLayout>

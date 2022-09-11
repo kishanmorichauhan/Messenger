@@ -44,11 +44,13 @@
                 android:layout_width="18dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="12dp"
+                android:visibility="gone"
                 app:srcCompat="@drawable/attechment" />
 
             <ImageView
                 android:id="@+id/camera"
-                android:layout_width="18dp"
+                android:layout_width="@dimen/_30sdp"
+                android:padding="@dimen/_6sdp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="12dp"
                 app:srcCompat="@drawable/camera" />

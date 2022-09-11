@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
@@ -54,6 +55,7 @@ public class ChatActivity extends AppCompatActivity {
     ProgressDialog dialog;
     String senderUid;
     String receiverUid;
+    ArrayList<String> broadCastId = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +81,12 @@ public class ChatActivity extends AppCompatActivity {
 
         String name = getIntent().getStringExtra("name");
         String profile = getIntent().getStringExtra("image");
+        try {
+            broadCastId = getIntent().getStringArrayListExtra("ids");
+            Log.e("kkhorogfsh",String.valueOf(broadCastId.size()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         binding.name.setText(name);
         Glide.with(ChatActivity.this)
@@ -98,22 +106,22 @@ public class ChatActivity extends AppCompatActivity {
 
         database.getReference().child("presence").child(receiverUid)
                 .addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    String status = snapshot.getValue(String.class);
-                    if(!status.isEmpty()) {
-                        binding.status.setText(status);
-                        binding.status.setVisibility(View.VISIBLE);
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            String status = snapshot.getValue(String.class);
+                            if (!status.isEmpty()) {
+                                binding.status.setText(status);
+                                binding.status.setVisibility(View.VISIBLE);
+                            }
+                        }
                     }
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
-            }
-        });
+                    }
+                });
 
         senderRoom = senderUid + receiverUid;
         receiverRoom = receiverUid + senderUid;
@@ -143,48 +151,16 @@ public class ChatActivity extends AppCompatActivity {
         binding.sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String messageTxt = binding.messageBox.getText().toString();
+                if (broadCastId!= null && broadCastId.size() > 0) {
+                    sendBroadCastMessage();
+                } else {
+                    setMessage();
+                }
 
-                Date date = new Date();
-                Message message = new Message(messageTxt, senderUid, date.getTime());
-                binding.messageBox.setText("");
-
-                String randomKey = database.getReference().push().getKey();
-
-                HashMap<String, Object> lastMsgObj = new HashMap<>();
-                lastMsgObj.put("lastMsg", message.getMessage());
-                lastMsgObj.put("lastMsgTime", date.getTime());
-
-                database.getReference().child("chats").child(senderRoom).updateChildren(lastMsgObj);
-                database.getReference().child("chats").child(receiverRoom).updateChildren(lastMsgObj);
-
-
-                database.getReference().child("chats")
-                        .child(senderRoom)
-                        .child("messages")
-                        .child(randomKey)
-                        .setValue(message)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                database.getReference().child("chats")
-                                        .child(receiverRoom)
-                                        .child("messages")
-                                        .child(randomKey)
-                                        .setValue(message)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void unused) {
-
-                                            }
-                                        });
-
-                            }
-                        });
             }
         });
 
-        binding.attechment.setOnClickListener(new View.OnClickListener() {
+        binding.camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -211,7 +187,7 @@ public class ChatActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 database.getReference().child("presence").child(senderUid).setValue("typing...");
                 handler.removeCallbacksAndMessages(null);
-                handler.postDelayed(userStopTyping,1000);
+                handler.postDelayed(userStopTyping, 1000);
             }
 
             Runnable userStopTyping = new Runnable() {
@@ -223,8 +199,109 @@ public class ChatActivity extends AppCompatActivity {
             };
         });
 
-       getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
+
+    void setMessage() {
+        String messageTxt = binding.messageBox.getText().toString();
+
+        if (messageTxt.trim().isEmpty()) {
+            return;
+        }
+
+        Date date = new Date();
+        Message message = new Message(messageTxt, senderUid, date.getTime());
+        binding.messageBox.setText("");
+
+        String randomKey = database.getReference().push().getKey();
+        HashMap<String, Object> lastMsgObj = new HashMap<>();
+        lastMsgObj.put("lastMsg", message.getMessage());
+        lastMsgObj.put("lastMsgTime", date.getTime());
+
+        database.getReference().child("chats").child(senderRoom).updateChildren(lastMsgObj);
+        database.getReference().child("chats").child(receiverRoom).updateChildren(lastMsgObj);
+
+
+        database.getReference().child("chats")
+                .child(senderRoom)
+                .child("messages")
+                .child(randomKey)
+                .setValue(message)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        database.getReference().child("chats")
+                                .child(receiverRoom)
+                                .child("messages")
+                                .child(randomKey)
+                                .setValue(message)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+
+                                    }
+                                });
+
+                    }
+                });
+    }
+
+    void sendBroadCastMessage() {
+
+        String messageTxt = binding.messageBox.getText().toString();
+
+        if (messageTxt.trim().isEmpty()) {
+            return;
+        }
+
+        Date date = new Date();
+        Message message = new Message(messageTxt, senderUid, date.getTime());
+        binding.messageBox.setText("");
+
+        for (String id : broadCastId) {
+            Log.e("rgbksbrng",id);
+            senderRoom = senderUid + id;
+            receiverRoom = id + senderUid;
+
+            String randomKey = database.getReference().push().getKey();
+            HashMap<String, Object> lastMsgObj = new HashMap<>();
+            lastMsgObj.put("lastMsg", message.getMessage());
+            lastMsgObj.put("lastMsgTime", date.getTime());
+
+            database.getReference().child("chats").child(senderRoom).updateChildren(lastMsgObj);
+            database.getReference().child("chats").child(receiverRoom).updateChildren(lastMsgObj);
+
+
+            database.getReference().child("chats")
+                    .child(senderRoom)
+                    .child("messages")
+                    .child(randomKey)
+                    .setValue(message)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            database.getReference().child("chats")
+                                    .child(receiverRoom)
+                                    .child("messages")
+                                    .child(randomKey)
+                                    .setValue(message)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+
+                                        }
+                                    });
+
+                        }
+                    });
+        }
+
+        Toast.makeText(this, "Message Send Successfully", Toast.LENGTH_SHORT).show();
+        onBackPressed();
+
+
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
@@ -297,6 +374,7 @@ public class ChatActivity extends AppCompatActivity {
         }
 
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -305,6 +383,7 @@ public class ChatActivity extends AppCompatActivity {
                 .child(currentId)
                 .setValue("Online");
     }
+
     @Override
     protected void onPause() {
         super.onPause();

@@ -108,7 +108,7 @@ public class GroupChat extends AppCompatActivity {
             }
         });
 
-        binding.attechment.setOnClickListener(new View.OnClickListener() {
+        binding.camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();

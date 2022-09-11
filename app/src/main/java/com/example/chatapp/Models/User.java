@@ -1,8 +1,13 @@
 package com.example.chatapp.Models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
 
-    private String uid, name , phoneNumber,profileImage;
+    private String uid, name,phoneNumber,profileImage;
+    boolean isSelected;
+    ArrayList<String> broadCastId;
 
     public User(){
         
@@ -13,6 +18,12 @@ public class User {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.profileImage = profileImage;
+    }
+
+    public User(String id, String name, ArrayList<String> broadCastId) {
+        this.uid = id;
+        this.name = name;
+        this.broadCastId = broadCastId;
     }
 
     public String getUid() {
@@ -45,5 +56,21 @@ public class User {
 
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    public ArrayList<String> getBroadCastId() {
+        return broadCastId;
+    }
+
+    public void setBroadCastId(ArrayList<String> broadCastId) {
+        this.broadCastId = broadCastId;
     }
 }

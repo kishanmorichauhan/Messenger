@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/kisha/AndroidStudioProjects/ChatApp/app/src/main/res/drawable-v24/receive_drawable.xml" value="0.135" />
+        <entry key="..\:/Users/kisha/AndroidStudioProjects/ChatApp/app/src/main/res/drawable/bg_gradiant.xml" value="0.129" />
+        <entry key="..\:/Users/kisha/AndroidStudioProjects/ChatApp/app/src/main/res/drawable/bottom_rounded_corner.xml" value="0.129" />
+        <entry key="..\:/Users/kisha/AndroidStudioProjects/ChatApp/app/src/main/res/drawable/btn_shape.xml" value="0.129" />
+        <entry key="..\:/Users/kisha/AndroidStudioProjects/ChatApp/app/src/main/res/drawable/cricle.xml" value="0.135" />
+        <entry key="..\:/Users/kisha/AndroidStudioProjects/ChatApp/app/src/main/res/drawable/et_shape.xml" value="0.129" />
+        <entry key="..\:/Users/kisha/AndroidStudioProjects/ChatApp/app/src/main/res/drawable/send_drawable.xml" value="0.135" />
+        <entry key="..\:/Users/kisha/AndroidStudioProjects/ChatApp/app/src/main/res/layout/activity_broad_cast.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/kisha/AndroidStudioProjects/ChatApp/app/src/main/res/layout/activity_chat.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/kisha/AndroidStudioProjects/ChatApp/app/src/main/res/layout/activity_group_chat.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/kisha/AndroidStudioProjects/ChatApp/app/src/main/res/layout/activity_main.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/kisha/AndroidStudioProjects/ChatApp/app/src/main/res/layout/activity_otpactivity.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/kisha/AndroidStudioProjects/ChatApp/app/src/main/res/layout/activity_phone_number.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/kisha/AndroidStudioProjects/ChatApp/app/src/main/res/layout/activity_register_user.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/kisha/AndroidStudioProjects/ChatApp/app/src/main/res/layout/activity_setup_profile.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/kisha/AndroidStudioProjects/ChatApp/app/src/main/res/layout/activity_sign_up.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/kisha/AndroidStudioProjects/ChatApp/app/src/main/res/layout/activity_spalsh_screen.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/kisha/AndroidStudioProjects/ChatApp/app/src/main/res/layout/item_receive.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/kisha/AndroidStudioProjects/ChatApp/app/src/main/res/layout/item_receive_group.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/kisha/AndroidStudioProjects/ChatApp/app/src/main/res/layout/item_send.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/kisha/AndroidStudioProjects/ChatApp/app/src/main/res/layout/item_send_group.xml" value="0.16145833333333334" />
+        <entry key="..\:/Users/kisha/AndroidStudioProjects/ChatApp/app/src/main/res/layout/row_conversation.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/kisha/AndroidStudioProjects/ChatApp/app/src/main/res/menu/menu.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/kisha/AndroidStudioProjects/ChatApp/app/src/main/res/menu/topmenu.xml" value="0.17552083333333332" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

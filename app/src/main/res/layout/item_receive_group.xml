@@ -50,7 +50,7 @@
             android:paddingRight="10dp"
             android:paddingBottom="5dp"
             android:text="TextView"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="14sp" />
     </LinearLayout>
 

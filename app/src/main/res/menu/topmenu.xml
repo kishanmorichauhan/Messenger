@@ -3,14 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/search"
-        android:icon="@drawable/search"
-        android:title="Search"
-        app:showAsAction="always" />
-    <item
         android:id="@+id/group"
-        android:title="Groups" />
+        android:title="My Group" />
     <item
-        android:id="@+id/settings"
-        android:title="Settings" />
+        android:id="@+id/broadCast"
+        android:title="Create BroadCast" />
+    <item
+        android:id="@+id/logout"
+        android:title="LogOut" />
 </menu>

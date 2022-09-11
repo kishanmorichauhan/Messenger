@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.chatapp">
 
     <application
@@ -9,26 +10,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ChatApp"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".Activitys.SpalshScreen">
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m">
+        <activity
+            android:name=".Activitys.BroadCastActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.SpalshScreen"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activitys.GroupChat"></activity>
+        <activity android:name=".Activitys.GroupChat" />
         <activity
             android:name=".Activitys.ChatActivity"
-            android:theme="@style/Theme.ChatApp.NoActionBar"></activity>
+            android:theme="@style/Theme.ChatApp.NoActionBar" />
         <activity android:name=".Activitys.SetupProfileActivity" />
         <activity
             android:name=".Activitys.OTPActivity"
             android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".Activitys.PhoneNumberActivity"
-            android:windowSoftInputMode="stateVisible">
-        </activity>
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".Activitys.MainActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
