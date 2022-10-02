@@ -1,12 +1,16 @@
 package com.example.chatapp.Adapters;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,19 +32,26 @@ import org.jetbrains.annotations.NotNull;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.SimpleTimeZone;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHolder> {
 
     Context context;
     ArrayList<User> users;
     boolean isBroadCast;
+    OnImageClickListener onImageClick;
+
+   public interface OnImageClickListener {
+       void onclick(String id);
+   }
 
 
-    public UsersAdapter(Context context, ArrayList<User> users,boolean isBroadCast) {
+    public UsersAdapter(Context context, ArrayList<User> users,boolean isBroadCast,OnImageClickListener onImageClick) {
         this.context = context;
         this.users = users;
         this.isBroadCast = isBroadCast;
+        this.onImageClick = onImageClick;
     }
 
     @NonNull
@@ -108,7 +119,20 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
         holder.binding.profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Clicked!", Toast.LENGTH_SHORT).show();
+                final Dialog dialog = new Dialog(context);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.profile_dialog);
+
+                TextView text =dialog.findViewById(R.id.tvName);
+                ImageView imageView = dialog.findViewById(R.id.profile);
+                Glide.with(context).load(user.getProfileImage())
+                        .placeholder(R.drawable.avatar)
+                        .into(imageView);
+                text.setText(user.getName());
+
+                dialog.show();
+
+
             }
         });
 
@@ -144,5 +168,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
             binding = RowConversationBinding.bind(itemView);
 
         }
+
     }
+
+
 }

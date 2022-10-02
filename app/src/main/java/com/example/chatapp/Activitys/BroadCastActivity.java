@@ -63,7 +63,12 @@ public class BroadCastActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        usersAdapter = new UsersAdapter(this, users, true);
+        usersAdapter = new UsersAdapter(this, users, true, new UsersAdapter.OnImageClickListener() {
+            @Override
+            public void onclick(String id) {
+
+            }
+        });
         binding.recyclerView.setAdapter(usersAdapter);
 
         ActionBar actionBar = getSupportActionBar();

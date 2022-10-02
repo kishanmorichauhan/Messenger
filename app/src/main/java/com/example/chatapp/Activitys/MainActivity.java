@@ -1,12 +1,15 @@
 package com.example.chatapp.Activitys;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -16,11 +19,16 @@ import com.example.chatapp.Models.User;
 import com.example.chatapp.Models.BroadCastModel;
 import com.example.chatapp.Adapters.UsersAdapter;
 import com.example.chatapp.databinding.ActivityMainBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -35,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     UsersAdapter usersAdapter;
     ProgressDialog progressDialog;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         database = FirebaseDatabase.getInstance();
+
+
         users = new ArrayList<>();
 
         progressDialog= new ProgressDialog(this);
@@ -49,7 +60,13 @@ public class MainActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        usersAdapter = new UsersAdapter(this,users,false);
+        usersAdapter = new UsersAdapter(this, users, false, new UsersAdapter.OnImageClickListener() {
+            @Override
+            public void onclick(String id) {
+                Intent openGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(openGalleryIntent,1);
+            }
+        });
         binding.recyclerView.setAdapter(usersAdapter);
 
         database.getReference().child("users").addValueEventListener(new ValueEventListener() {
@@ -102,6 +119,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent broadCastIntent = new Intent(MainActivity.this,BroadCastActivity.class);
                 startActivity(broadCastIntent);
                 break;
+            case R.id.setting:
+                Intent settingIntent = new Intent(MainActivity.this,SettingActivity.class);
+                startActivity(settingIntent);
+                break;
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(MainActivity.this,PhoneNumberActivity.class);
@@ -138,6 +159,8 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+
 
 
 }

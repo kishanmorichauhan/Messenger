@@ -9,6 +9,10 @@
         android:id="@+id/broadCast"
         android:title="Create BroadCast" />
     <item
+        android:id="@+id/setting"
+        android:title="Setting" />
+
+    <item
         android:id="@+id/logout"
         android:title="LogOut" />
 </menu>
